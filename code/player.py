@@ -21,9 +21,15 @@ class Player:
         if teclas[pygame.K_RIGHT]:
             self.x += self.vel
 
+        # limitar dentro da tela
+        if self.x < 0:
+            self.x = 0
+        if self.x > 550:
+            self.x = 550
+
         # atualiza a posição do retângulo
         self.rect.topleft = (self.x, self.y)
 
     def desenhar(self, tela):
-        pygame.draw.rect(tela(tela, (0, 0, 255), self.rect)
+        pygame.draw.rect(tela, (0, 0, 255), self.rect)
 
