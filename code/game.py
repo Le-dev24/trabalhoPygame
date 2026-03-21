@@ -19,10 +19,11 @@ class Game:
         # controle de jogo
         self.rodando = True
 
-        # classe player
-        self.player = Player(250, 350)
+        # estado do jogo
+        self.estado = 'Jogando'
 
-        # classe objeto
+        # objetos do jogo
+        self.player = Player(250, 350)
         self.objeto = Objeto()
 
     def run(self):
@@ -33,14 +34,32 @@ class Game:
                 if evento.type == pygame.QUIT:
                     self.rodando = False
 
-            teclas = pygame.key.get_pressed()
-            self.player.mover(teclas)
+            # estado: jogando
+            if self.estado == 'Jogando':
+                teclas = pygame.key.get_pressed()
+                self.player.mover(teclas)
 
-            self.objeto.atualizar()
+                self.objeto.atualizar()
 
-            self.tela.fill((0, 0, 0))
+                #colisão
+                if self.player.rect.colliderect(self.objeto.rect):
+                    self.estado = 'game_over'
 
-            self.player.desenhar(self.tela)
-            self.objeto.desenhar(self.tela)
+                self.tela.fill((0, 0, 0))
 
-            pygame.display.update()
+                self.player.desenhar(self.tela)
+                self.objeto.desenhar(self.tela)
+
+                pygame.display.update()
+
+            # estado: game over
+            elif self.estado == 'game_over':
+                self.tela.fill((0, 0, 0))
+
+                fonte = pygame.font.SysFont(None, 50)
+                texto = fonte.render('GAME OVER', True, (255, 0, 0))
+
+                self.tela.blit(texto, (180, 150))
+
+
+                pygame.display.update()
