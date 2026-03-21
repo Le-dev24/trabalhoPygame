@@ -2,6 +2,7 @@ import pygame
 
 from code.player import Player
 from code.objeto import Objeto
+from code.menu import Menu
 
 class Game:
     def __init__(self):
@@ -20,11 +21,15 @@ class Game:
         self.rodando = True
 
         # estado do jogo
-        self.estado = 'Jogando'
+        self.estado = 'jogando'
 
         # objetos do jogo
         self.player = Player(250, 350)
         self.objeto = Objeto()
+
+        # menu
+        self.estado = 'menu'
+        self.menu = Menu(self.tela)
 
     def run(self):
         while self.rodando:
@@ -34,8 +39,22 @@ class Game:
                 if evento.type == pygame.QUIT:
                     self.rodando = False
 
+                if evento.type == pygame.KEYDOWN:
+                    if self.estado == 'menu' and evento.key == pygame.K_SPACE:
+                        self.estado = 'jogando'
+
+                    if self.estado == 'game_over' and evento.key == pygame.K_r:
+                        self.estado = 'jogando'
+
+            # menu
+
+            if self.estado == 'menu':
+                self.menu.desenhar()
+                pygame.display.update()
+
+
             # estado: jogando
-            if self.estado == 'Jogando':
+            if self.estado == 'jogando':
                 teclas = pygame.key.get_pressed()
                 self.player.mover(teclas)
 
