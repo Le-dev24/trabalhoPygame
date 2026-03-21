@@ -1,6 +1,7 @@
 import pygame
 
 from code.player import Player
+from code.objeto import Objeto
 
 class Game:
     def __init__(self):
@@ -21,6 +22,9 @@ class Game:
         # classe player
         self.player = Player(250, 350)
 
+        # classe objeto
+        self.objeto = Objeto()
+
     def run(self):
         while self.rodando:
             self.clock.tick(60)
@@ -29,12 +33,14 @@ class Game:
                 if evento.type == pygame.QUIT:
                     self.rodando = False
 
-            # classe player
             teclas = pygame.key.get_pressed()
             self.player.mover(teclas)
+
+            self.objeto.atualizar()
 
             self.tela.fill((0, 0, 0))
 
             self.player.desenhar(self.tela)
+            self.objeto.desenhar(self.tela)
 
             pygame.display.update()
