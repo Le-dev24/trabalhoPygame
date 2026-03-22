@@ -14,6 +14,9 @@ class Game:
         self.tela = pygame.display.set_mode((self.largura, self.altura))
         pygame.display.set_caption('Desvie dos objetos')
 
+        self.bg = pygame.image.load('assets/background.png')
+        self.bg = pygame.transform.scale(self.bg, (600, 400))
+
         # controle de tempo
         self.clock = pygame.time.Clock()
 
@@ -64,7 +67,8 @@ class Game:
                 if self.player.rect.colliderect(self.objeto.rect):
                     self.estado = 'game_over'
 
-                self.tela.fill((0, 0, 0))
+                #self.tela.fill((0, 0, 0))
+                self.tela.blit(self.bg, (0, 0))
 
                 self.player.desenhar(self.tela)
                 self.objeto.desenhar(self.tela)

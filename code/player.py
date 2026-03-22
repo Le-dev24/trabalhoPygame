@@ -15,6 +15,9 @@ class Player:
         # retângulo usado para a colisão
         self.rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
 
+        self.imagem = pygame.image.load('assets/player.png')
+        self.image = pygame.transform.scale(self.imagem, (50, 50))
+
     def mover(self, teclas):
         if teclas[pygame.K_LEFT]:
             self.x -= self.vel
@@ -31,5 +34,7 @@ class Player:
         self.rect.topleft = (self.x, self.y)
 
     def desenhar(self, tela):
-        pygame.draw.rect(tela, (0, 0, 255), self.rect)
+        #pygame.draw.rect(tela, (0, 0, 255), self.rect)
+        tela.blit(self.imagem, (self.x, self.y))
+
 

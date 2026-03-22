@@ -13,6 +13,9 @@ class Objeto:
 
         self.rect = pygame.Rect(self.x, self.y, self.altura, self.largura)
 
+        self.imagem = pygame.image.load('assets/objeto.png')
+        self.imagem = pygame.transform.scale(self.imagem, (50, 50))
+
     def atualizar (self):
         self.y += self.vel
 
@@ -24,7 +27,8 @@ class Objeto:
         self.rect.topleft = (self.x, self.y)
 
     def desenhar(self, tela):
-        pygame.draw.rect(tela, (255, 0, 0), self.rect)
+        #pygame.draw.rect(tela, (255, 0, 0), self.rect)
+        tela.blit(self.imagem, (self.x, self.y))
 
 
 
