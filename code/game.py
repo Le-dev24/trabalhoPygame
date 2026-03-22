@@ -12,7 +12,7 @@ class Game:
 
         # criar janela
         self.tela = pygame.display.set_mode((self.largura, self.altura))
-        pygame.display.set_caption('Desvie dos objetos')
+        pygame.display.set_caption('UFO Run')
 
         self.bg = pygame.image.load('assets/background.png')
         self.bg = pygame.transform.scale(self.bg, (600, 400))
@@ -23,9 +23,6 @@ class Game:
         # controle de jogo
         self.rodando = True
 
-        # estado do jogo
-        self.estado = 'jogando'
-
         # objetos do jogo
         self.player = Player(250, 350)
         self.objeto = Objeto()
@@ -33,6 +30,20 @@ class Game:
         # menu
         self.estado = 'menu'
         self.menu = Menu(self.tela)
+
+    def resetar_jogo(self):
+        self.player.x = 250
+        self.player.y = 250
+        self.player.rect.topleft = (self.player.x, self.player.y)
+
+        self.player.x = self.player.x_inicial
+        self.player.y = self.player.y_inicial
+        self.player.rect.topleft = (self.player.x, self.player.y)
+
+        import random
+        self.objeto.x = 0
+        self.objeto.y = random.randint(0, 550)
+        self.objeto.rect.topleft = (self.objeto.x, self.objeto.y)
 
     def run(self):
         while self.rodando:
@@ -47,6 +58,7 @@ class Game:
                         self.estado = 'jogando'
 
                     if self.estado == 'game_over' and evento.key == pygame.K_r:
+                        self.resetar_jogo()
                         self.estado = 'jogando'
 
             # menu
@@ -77,12 +89,21 @@ class Game:
 
             # estado: game over
             elif self.estado == 'game_over':
-                self.tela.fill((0, 0, 0))
+                self.tela.blit(self.bg, (0, 0))
 
-                fonte = pygame.font.SysFont(None, 50)
-                texto = fonte.render('GAME OVER', True, (255, 0, 0))
+                fonte_titulo = pygame.font.SysFont(None, 60)
+                fonte_texto = pygame.font.SysFont(None, 35)
 
-                self.tela.blit(texto, (180, 150))
+                texto = fonte_titulo.render('GAME OVER',True, (255, 0, 0))
+                reiniciar = fonte_texto.render('Pressione R para jogar novamente', True, (255, 255, 255))
+
+                # centralizar
+                texto_rect = texto.get_rect(center=(self.largura // 2, 150))
+                reiniciar_rect = reiniciar.get_rect(center=(self.largura // 2, 230))
+
+                self.tela.blit(texto, texto_rect)
+                self.tela.blit(reiniciar, reiniciar_rect)
+
 
 
                 pygame.display.update()

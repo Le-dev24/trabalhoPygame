@@ -27,7 +27,6 @@ class Objeto:
         self.rect.topleft = (self.x, self.y)
 
     def desenhar(self, tela):
-        #pygame.draw.rect(tela, (255, 0, 0), self.rect)
         tela.blit(self.imagem, (self.x, self.y))
 
 

@@ -5,6 +5,10 @@ class Player:
         self.x = x
         self.y = y
 
+        #guardar posição inicial
+        self.x_inicial = x
+        self.y_inicial = y
+
         # tamanho
         self.largura = 50
         self.altura = 50
